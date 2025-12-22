@@ -21,21 +21,6 @@ _model = None
 _tokenizer = None
 
 
-def download_model():
-    if MODEL_WEIGHTS.exists():
-        return
-
-    MODEL_DIR.mkdir(parents=True, exist_ok=True)
-
-    FILE_ID = "16eFmUwUSlWBBfwplzM6kPG9KtqJt5r3I"
-    url = f"https://drive.google.com/uc?id={FILE_ID}"
-
-    print("📥 감성분석 모델 다운로드 중...")
-    gdown.download(url, str(MODEL_WEIGHTS), quiet=False)
-    print("✅ 모델 다운로드 완료")
-
-
-
 # =========================
 # 모델 로드 (메모리 최적화)
 # =========================
@@ -48,9 +33,6 @@ def load_model():
     print("🔄 감성분석 모델 로드 중...")
 
     try:
-        # 모델 파일이 없으면 Google Drive에서 다운로드
-        download_model()
-
         # tokenizer 로드
         _tokenizer = BertTokenizer.from_pretrained(MODEL_DIR)
 

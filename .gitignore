@@ -29,4 +29,4 @@ __pycache__/
 .DS_Store
 
 # ========== 기타 ==========
-pytorch_model_quantized.pt
+#pytorch_model_quantized.pt

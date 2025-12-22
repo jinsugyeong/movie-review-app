@@ -4,6 +4,8 @@ import random
 from datetime import datetime
 
 API = "https://movie-review-app-wmnz.onrender.com"
+#API = "http://localhost:8000"
+
 st.set_page_config(page_title="Movie Review App", page_icon="🎬", layout="wide")
 
 # 감성 점수를 별로 변환
