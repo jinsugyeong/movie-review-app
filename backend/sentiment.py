@@ -30,10 +30,10 @@ def download_and_extract_model():
         return
     
     BASE_DIR.mkdir(parents=True, exist_ok=True)
-    zip_path = BASE_DIR / "korean_movie_sentiment_model.zip"
+    zip_path = BASE_DIR / "model.zip"
     
     # Google Drive 파일 ID (자신의 ID로 변경)
-    FILE_ID = "YOUR_ZIP_FILE_ID_HERE"
+    FILE_ID = "16eFmUwUSlWBBfwplzM6kPG9KtqJt5r3I"
     url = f"https://drive.google.com/uc?id={FILE_ID}"
     
     print("📥 Google Drive에서 모델 폴더 다운로드 중...")
