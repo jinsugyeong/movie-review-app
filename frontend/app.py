@@ -3,7 +3,7 @@ import requests
 import random
 from datetime import datetime
 
-API = "http://localhost:8000"
+API = "https://movie-review-app-wmnz.onrender.com"
 
 st.set_page_config(layout="wide")
 
