@@ -1,14 +1,20 @@
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, Field
 from typing import Optional, List
 import datetime as dt
 
 
+from pydantic import BaseModel, Field
+from typing import Optional, List
+import datetime as dt
+
+
+# ---------- Movie ----------
 class MovieCreate(BaseModel):
     title: str = Field(..., min_length=1, max_length=200)
     release_date: Optional[dt.date] = None
     director: Optional[str] = None
     genre: Optional[str] = None
-    poster_url: Optional[str] = None  # url 검증 빡세게 안 걸어도 됨
+    poster_url: Optional[str] = None
 
 
 class MovieOut(BaseModel):
@@ -18,13 +24,13 @@ class MovieOut(BaseModel):
     director: Optional[str]
     genre: Optional[str]
     poster_url: Optional[str]
-    created_at: dt.datetime
-    avg_sentiment: Optional[float] = None  # 리뷰 평균(심화)
+    created_at: Optional[dt.datetime] = None
 
     class Config:
         from_attributes = True
 
 
+# ---------- Review ----------
 class ReviewCreate(BaseModel):
     movie_id: int
     author: str = Field(..., min_length=1, max_length=80)
@@ -38,6 +44,7 @@ class ReviewOut(BaseModel):
     content: str
     sentiment_label: str
     sentiment_score: float
+    sentiment_confidence: float
     created_at: dt.datetime
 
     class Config:
@@ -47,3 +54,4 @@ class ReviewOut(BaseModel):
 class PaginatedReviews(BaseModel):
     items: List[ReviewOut]
     total: int
+
