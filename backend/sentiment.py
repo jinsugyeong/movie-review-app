@@ -1,11 +1,9 @@
 import torch
 from pathlib import Path
 from typing import Tuple
-
-from transformers import (
-    BertTokenizer,
-    BertConfig
-)
+import gdown
+import zipfile
+from transformers import BertTokenizer, BertConfig
 
 
 torch.backends.quantized.engine = "qnnpack"
@@ -25,6 +23,32 @@ _model = None
 _tokenizer = None
 
 
+def download_and_extract_model():
+    """Google Drive에서 모델 폴더(ZIP) 다운로드 및 압축 해제"""
+    if MODEL_WEIGHTS.exists():
+        print("✅ 모델 폴더 이미 존재")
+        return
+    
+    BASE_DIR.mkdir(parents=True, exist_ok=True)
+    zip_path = BASE_DIR / "korean_movie_sentiment_model.zip"
+    
+    # Google Drive 파일 ID (자신의 ID로 변경)
+    FILE_ID = "YOUR_ZIP_FILE_ID_HERE"
+    url = f"https://drive.google.com/uc?id={FILE_ID}"
+    
+    print("📥 Google Drive에서 모델 폴더 다운로드 중...")
+    gdown.download(url, str(zip_path), quiet=False)
+    
+    print("📦 압축 해제 중...")
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall(BASE_DIR)
+    
+    # ZIP 파일 삭제
+    zip_path.unlink()
+    print("✅ 모델 폴더 준비 완료!")
+
+
+
 # =========================
 # 모델 로드 (1회)
 # =========================
@@ -37,6 +61,9 @@ def load_model():
     print(":arrows_counterclockwise: 감성분석 모델 로드 중...")
 
     try:
+        # 모델 파일이 없으면 Google Drive에서 다운로드
+        download_and_extract_model()
+
         # :one: tokenizer 로드
         _tokenizer = BertTokenizer.from_pretrained(MODEL_DIR)
 

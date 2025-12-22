@@ -3,6 +3,7 @@ uvicorn
 sqlalchemy
 transformers
 torch
+gdown
 streamlit
 requests
 pydantic
