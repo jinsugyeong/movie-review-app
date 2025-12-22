@@ -21,9 +21,9 @@ __pycache__/
 *.swp
 
 # ========== 데이터베이스 ==========
-*.db
-*.sqlite
-*.sqlite3
+#*.db
+#*.sqlite
+#*.sqlite3
 
 # ========== MacOS ==========
 .DS_Store

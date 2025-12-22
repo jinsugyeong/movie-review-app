@@ -4,8 +4,7 @@ import random
 from datetime import datetime
 
 API = "https://movie-review-app-wmnz.onrender.com"
-
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="Movie Review App", page_icon="🎬", layout="wide")
 
 # 감성 점수를 별로 변환
 def score_to_stars(score: float) -> str:
