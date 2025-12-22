@@ -21,32 +21,19 @@ _model = None
 _tokenizer = None
 
 
-def download_and_extract_model():
-    """Google Drive에서 모델 폴더(ZIP) 다운로드 및 압축 해제"""
+def download_model():
     if MODEL_WEIGHTS.exists():
-        print("✅ 모델 폴더 이미 존재")
         return
-    
-    models_dir = BASE_DIR / "models"
-    models_dir.mkdir(parents=True, exist_ok=True)
-    zip_path = models_dir / "model.zip"
-    
+
+    MODEL_DIR.mkdir(parents=True, exist_ok=True)
+
     FILE_ID = "16eFmUwUSlWBBfwplzM6kPG9KtqJt5r3I"
     url = f"https://drive.google.com/uc?id={FILE_ID}"
-    
-    print("📥 Google Drive에서 모델 폴더 다운로드 중...")
-    try:
-        gdown.download(url, str(zip_path), quiet=False)
-        
-        print("📦 압축 해제 중...")
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall(models_dir)
-        
-        zip_path.unlink()
-        print("✅ 모델 폴더 준비 완료!")
-    except Exception as e:
-        print(f"❌ 모델 다운로드 실패: {e}")
-        raise
+
+    print("📥 감성분석 모델 다운로드 중...")
+    gdown.download(url, str(MODEL_WEIGHTS), quiet=False)
+    print("✅ 모델 다운로드 완료")
+
 
 
 # =========================
@@ -58,11 +45,11 @@ def load_model():
     if _model is not None:
         return _model, _tokenizer
 
-    print(":arrows_counterclockwise: 감성분석 모델 로드 중...")
+    print("🔄 감성분석 모델 로드 중...")
 
     try:
         # 모델 파일이 없으면 Google Drive에서 다운로드
-        download_and_extract_model()
+        download_model()
 
         # tokenizer 로드
         _tokenizer = BertTokenizer.from_pretrained(MODEL_DIR)
@@ -97,11 +84,11 @@ def load_model():
         except:
             print("⚠️ 양자화 실패 (모델이 이미 양자화되었을 수 있음)")
 
-        print(":white_check_mark: 감성분석 모델 로드 성공")
+        print("☑️ 감성분석 모델 로드 성공")
         return _model, _tokenizer
 
     except Exception as e:
-        print(f":x: 모델 로드 실패: {e}")
+        print(f"❌ 모델 로드 실패: {e}")
         return None, None
 
 
