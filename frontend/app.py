@@ -220,7 +220,14 @@ if st.sidebar.button("더미 데이터 생성", use_container_width=True):
 if st.session_state.menu == "movie_list":
     if st.session_state.selected_movie is None:
         st.title("🎞 영화 목록")
-        movies = requests.get(f"{API}/movies").json()
+        res = requests.get(f"{API}/movies")
+
+        if res.status_code != 200:
+            st.error(f"/movies API 오류: {res.status_code}")
+            st.code(res.text)   # 👈 여기서 진짜 원인 보임
+            st.stop()
+
+        movies = res.json()
 
         # ---------------- 목록 ----------------
         cols = st.columns(3)
