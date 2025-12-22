@@ -5,7 +5,7 @@
 
 ## 배포 링크
 - **프론트엔드**: https://movie-review--app.streamlit.app
-- **백엔드 API**: https://movie-review-api.onrender.com
+- **백엔드 API**: https://movie-review-app-wmnz.onrender.com
 
 ## 로컬 실행
 

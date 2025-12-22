@@ -14,7 +14,7 @@ torch.backends.quantized.engine = "qnnpack"
 # 모델 경로
 # =========================
 BASE_DIR = Path(__file__).parent
-MODEL_DIR = BASE_DIR / "models" / "korean_movie_sentiment_model"
+MODEL_DIR = BASE_DIR / "models" / "my_korean_movie_sentiment_model"
 MODEL_WEIGHTS = MODEL_DIR / "pytorch_model_quantized.pt"
 
 _device = torch.device("cpu")
@@ -29,8 +29,9 @@ def download_and_extract_model():
         print("✅ 모델 폴더 이미 존재")
         return
     
-    BASE_DIR.mkdir(parents=True, exist_ok=True)
-    zip_path = BASE_DIR / "model.zip"
+    models_dir = BASE_DIR / "models"
+    models_dir.mkdir(parents=True, exist_ok=True)
+    zip_path = models_dir / "model.zip"
     
     # Google Drive 파일 ID (자신의 ID로 변경)
     FILE_ID = "16eFmUwUSlWBBfwplzM6kPG9KtqJt5r3I"
@@ -41,7 +42,7 @@ def download_and_extract_model():
     
     print("📦 압축 해제 중...")
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(BASE_DIR)
+        zip_ref.extractall(models_dir)
     
     # ZIP 파일 삭제
     zip_path.unlink()
@@ -163,7 +164,7 @@ def analyze_sentiment(text: str) -> Tuple[str, float, float]:
     model, tokenizer = load_model()
 
     if model is None:
-        return "중립", 0.5, 2.5
+        return "중립", 0.5, 3.0
 
     try:
         inputs = tokenizer(
@@ -193,4 +194,4 @@ def analyze_sentiment(text: str) -> Tuple[str, float, float]:
 
     except Exception as e:
         print(f":x: 감성분석 오류: {e}")
-        return "중립", 0.5, 2.5
+        return "중립", 0.5, 3.0
