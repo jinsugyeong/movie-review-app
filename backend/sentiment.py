@@ -51,20 +51,6 @@ def load_model():
         _model.to(_device)
         _model.eval()
         
-        # 중요: 그래디언트 비활성화 (메모리 절약)
-        for param in _model.parameters():
-            param.requires_grad = False
-        
-        # 동적 양자화 (메모리 30% 감소)
-        try:
-            _model = torch.quantization.quantize_dynamic(
-                _model,
-                {torch.nn.Linear},
-                dtype=torch.qint8
-            )
-            print("✅ 동적 양자화 적용됨")
-        except:
-            print("⚠️ 양자화 실패 (모델이 이미 양자화되었을 수 있음)")
 
         print("☑️ 감성분석 모델 로드 성공")
         return _model, _tokenizer
