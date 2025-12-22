@@ -1,0 +1,32 @@
+# .gitignore
+
+# ========== 환경 변수 ==========
+.env
+.env.local
+
+# ========== Streamlit Secrets ==========
+.streamlit/secrets.toml
+
+# ========== Python 캐시 ==========
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ========== 가상환경 ==========
+.venv/
+
+# ========== IDE ==========
+.vscode/
+.idea/
+*.swp
+
+# ========== 데이터베이스 ==========
+*.db
+*.sqlite
+*.sqlite3
+
+# ========== MacOS ==========
+.DS_Store
+
+# ========== 기타 ==========
+backend/models/
