@@ -15,6 +15,7 @@ class Movie(Base):
     director = Column(String)
     genre = Column(String)
     poster_url = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 
     reviews = relationship("Review", back_populates="movie", cascade="all, delete")

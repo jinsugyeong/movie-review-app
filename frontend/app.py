@@ -161,10 +161,10 @@ if st.sidebar.button("더미 데이터 생성", use_container_width=True):
     existing_titles = {m["title"] for m in requests.get(f"{API}/movies").json()}
 
     movies = [
-        ("아바타: 불과 재", "2024-12-20", "제임스 카메론", "SF", "https://i.namu.wiki/i/UyN7wDQJ2QnXo-RivyWd573b1K-YZ9fAFUr0nyWMZLc_vd1NW45XQBBslwhUIfrHGyqSLIqryRYb9ItDci2hvc6C6TV1g822dsIAYcmw4VLWoPldfg-060N-9ua7vghptFaEAefg7sNzxvseXqsksg.webp"),
+        ("아바타: 불과 재", "2025-12-20", "제임스 카메론", "SF", "https://i.namu.wiki/i/UyN7wDQJ2QnXo-RivyWd573b1K-YZ9fAFUr0nyWMZLc_vd1NW45XQBBslwhUIfrHGyqSLIqryRYb9ItDci2hvc6C6TV1g822dsIAYcmw4VLWoPldfg-060N-9ua7vghptFaEAefg7sNzxvseXqsksg.webp"),
         ("탈주", "2024-07-03", "이종필", "액션", "https://i.namu.wiki/i/GOCVqsctfY_ei_5gC38-8UlHqQ4ypixYpkfgGn_LcDsYpgelrJDMAlgxzrkwWZo0n0vnCcdgPgA7-_mNfScR5OkZuZU9JaGdNUZZyikeeUB19MlwR3VUdxaTjA4XHaUvyKP2LaGad9A4nVAi4ymAkg.webp"),
-        ("집으로 가는 길", "2013-12-11", "방은진", "드라마", "https://i.namu.wiki/i/O58yKrByuDlVcPA4TXIlytF98-4mBDnVGLloYTsQeqrkklOVqXkIR2rAySTDnLmWAb_Pe4VCSsVNEFDG4kWJOI4F9TrjcyL3DD26lpQBunOZaCl1z2DH5tjRABEyRXdMmcsUEYrryf--NoP9Ezd1lw.webp"),
-        ("전지적 독자 시점", "2025-01-01", "김병우", "판타지", "https://i.namu.wiki/i/78fa4oC92J13_-Z7Pw-_v_6TsLDJ2kBkTZqrfLm-ll9f_jgXP41H7UtUTXXCZpvTOZcIAsMqP3tsi6IfFvA2GFr8Cnto-mKubovE-MzWQeqcPVnG9LayEW46wv7UDm1lwnyYPxuiakPxi_LGLZccjQ.webp"),
+        ("집으로 가는 길", "2013-12-12", "방은진", "드라마", "https://i.namu.wiki/i/O58yKrByuDlVcPA4TXIlytF98-4mBDnVGLloYTsQeqrkklOVqXkIR2rAySTDnLmWAb_Pe4VCSsVNEFDG4kWJOI4F9TrjcyL3DD26lpQBunOZaCl1z2DH5tjRABEyRXdMmcsUEYrryf--NoP9Ezd1lw.webp"),
+        ("전지적 독자 시점", "2025-07-23", "김병우", "판타지", "https://i.namu.wiki/i/78fa4oC92J13_-Z7Pw-_v_6TsLDJ2kBkTZqrfLm-ll9f_jgXP41H7UtUTXXCZpvTOZcIAsMqP3tsi6IfFvA2GFr8Cnto-mKubovE-MzWQeqcPVnG9LayEW46wv7UDm1lwnyYPxuiakPxi_LGLZccjQ.webp"),
         ("극장판 짱구는 못말려: 초화려! 작열하는 떡잎마을 댄서즈", "2025-12-24", "하시모토 마사카즈", "애니메이션", "https://i.namu.wiki/i/yyOX12GcO3Z83hCYIxFvvjaUZnf9FshyOTeoT0s28URV1EhVWfDZ_349Mj6pyOQ3WuOK-oxRS9BHp_sP8hiZYq0aEGyMp8aNTlR6PwEGiZ4GNy_WtzkTC_i-PIha4yL5wusVyP5dsPhf3_aJ6zXWZg.webp"),
     ]
 
