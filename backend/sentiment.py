@@ -18,52 +18,58 @@ _tokenizer = None
 # =========================
 # 모델 로드 (한 번만 실행)
 # =========================
+import onnxruntime as ort
+from pathlib import Path
+from transformers import BertTokenizer
+from huggingface_hub import snapshot_download
+
+HF_REPO_ID = "jinsugyeong/korean_movie_onnx"
+CACHE_DIR = Path("/tmp/onnx_model")
+
+_session = None
+_tokenizer = None
+
+
 def load_model():
     global _session, _tokenizer
 
-    if _session is not None:
+    # ✅ 이미 로드됐으면 바로 반환
+    if _session is not None and _tokenizer is not None:
         return _session, _tokenizer
-    
+
     print("🔄 감성분석 ONNX 모델 로드 시작")
 
-    # 모델 파일 존재 여부 체크
-    if not (CACHE_DIR / "model.onnx").exists():
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    model_path = CACHE_DIR / "model.onnx"
+
+    # ✅ 모델 없을 때만 다운로드
+    if not model_path.exists():
         print("📥 모델 캐시 없음 → 다운로드")
         snapshot_download(
             repo_id=HF_REPO_ID,
             local_dir=CACHE_DIR,
-            local_dir_use_symlinks=False
+            local_dir_use_symlinks=False,  # Render 필수
         )
     else:
         print("♻️ 캐시된 모델 사용")
 
     try:
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        # tokenizer
+        _tokenizer = BertTokenizer.from_pretrained(CACHE_DIR)
 
-        # 1️⃣ 레포 전체 다운로드 (model.onnx + model.onnx.data + tokenizer)
-        local_repo_path = snapshot_download(
-            repo_id=HF_REPO_ID,
-            cache_dir=CACHE_DIR,
-            local_dir_use_symlinks=False,  # ⚠ Render에서 필수
-        )
-
-        # 2️⃣ tokenizer 로드
-        _tokenizer = BertTokenizer.from_pretrained(local_repo_path)
-
-        # 3️⃣ ONNX Runtime 세션
-        onnx_path = Path(local_repo_path) / "model.onnx"
-
+        # ONNX 세션
         _session = ort.InferenceSession(
-            str(onnx_path),
+            str(model_path),
             providers=["CPUExecutionProvider"]
         )
 
-        print("✅ 감성분석 ONNX 모델 로드 성공")
+        print("✅ 감성분석 ONNX 모델 로드 완료")
         return _session, _tokenizer
 
     except Exception as e:
         print(f"❌ 모델 로드 실패: {e}")
         return None, None
+
 
 
 
@@ -241,7 +247,7 @@ def analyze_sentiment(text: str) -> Tuple[str, float, float]:
         label, confidence, sentiment_score = calculate_sentiment_score(neg, neu, pos)
 
         print(
-            f"{text}\n"
+            f"리뷰: {text}\n"
             f"✓ 감성분석 | "
             f"NEG={neg:.3f} NEU={neu:.3f} POS={pos:.3f} → {label} (별점: {sentiment_score:.2f})"
         )
